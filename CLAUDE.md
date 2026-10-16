@@ -3,8 +3,9 @@
 Arabic-first, multi-tenant, AI-assisted construction-materials procurement platform for Oman (GCC later). It connects manufacturers, distributors, retailers, contractors and project owners. Six OpenAI agents **propose**; a deterministic workflow controller **validates and persists**; humans **approve** every commercial commitment. This is a 12-hour hackathon MVP.
 
 ## Status
-- **Phase 0 (foundation docs): complete. Waiting for owner approval before Stage 1.**
-- Current stage: — (none started). Update this line at every checkpoint.
+- Phase 0 (foundation docs): complete.
+- **Stage 1 (scaffold): complete locally** — `npm run verify` green, tag `stage-1`. Pending: first push to GitHub (owner must refresh the GitHub login on this machine) → link Vercel project → preview deploy.
+- Next: Stage 2 (deterministic domain core). Update these lines at every checkpoint.
 
 ## Source of truth — read the relevant doc before coding
 | Doc | Use it for |
