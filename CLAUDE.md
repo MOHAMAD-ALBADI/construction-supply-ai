@@ -4,8 +4,8 @@ Arabic-first, multi-tenant, AI-assisted construction-materials procurement platf
 
 ## Status
 - Phase 0 (foundation docs): complete.
-- **Stage 1 (scaffold): complete locally** — `npm run verify` green, tag `stage-1`. Pending: first push to GitHub (owner must refresh the GitHub login on this machine) → link Vercel project → preview deploy.
-- Next: Stage 2 (deterministic domain core). Update these lines at every checkpoint.
+- **Stage 1 (environment, RTL shell, navigation): complete locally** — `npm run verify` green (8 tests), dev server smoke-tested. Pending: first push to GitHub (owner must refresh the GitHub login on this machine) → link Vercel project → preview deploy. **No deployment URL yet.**
+- **Stage 2 not started — waits for explicit owner approval.** Detailed log: [docs/IMPLEMENTATION_STATUS.md](docs/IMPLEMENTATION_STATUS.md) (update it at every checkpoint).
 
 ## Source of truth — read the relevant doc before coding
 | Doc | Use it for |
@@ -43,7 +43,16 @@ Next.js App Router + TypeScript · Tailwind + shadcn/ui · Supabase (Postgres, A
 | @supabase/supabase-js / @supabase/ssr | 2.118.0 / 0.12.7 | Add in Stage 3/4 |
 | openai | 7.34.0 | Add in Stage 5; peer `zod ^3.25 \|\| ^4.0` ✓ |
 
+| shadcn/ui (CLI 4.22.0) | style `radix-nova`, `rtl: true` | `radix-ui` 1.6.7, `lucide-react` 1.54.0, cva/clsx/tailwind-merge, `tw-animate-css`. **After every `shadcn add`, rewrite `from "cn"` → `from "@/lib/utils"` and do not keep the `cn` package.** The CLI's network calls to `ui.shadcn.com` time out often here — retry. |
+| @fontsource/ibm-plex-sans-arabic | 5.3.0 | Self-hosted font (no Google Fonts fetch at build) |
+
 Add-on dependency justifications go in this table.
+
+### UI conventions
+- App routes live in `src/app/(app)/` behind `AppShell`; nav items in `src/config/navigation.ts` (a test fails if a nav link has no page).
+- Section pages not built yet use `SectionPlaceholder` (states content + stage). Never show invented numbers — use `common.notConnected` ("—").
+- `SidebarNav` is rendered only inside client boundaries (`DesktopNav`, `MobileNav`).
+- Local network is flaky: npm uses longer timeouts from `.npmrc`; `api.openai.com` was unreachable from this machine on 2026-10-16.
 
 ## Environment & services
 | Service | Value | Notes |

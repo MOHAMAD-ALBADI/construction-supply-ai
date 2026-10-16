@@ -74,12 +74,14 @@
 | `/login` | all | Supabase email/password login, plus a persona quick-login panel (demo mode only) |
 | `/` | all | Redirect to the home page for the active org type |
 | `/dashboard` | platform | **Main operational dashboard**: pipeline by state, pending gates, agent health |
-| `/supplier` | manufacturer, distributor | **Factory/distributor dashboard**: offers, incoming RFQs, quotes, counteroffers, POs, dispatch |
-| `/retailer` | retailer | **Inventory & purchasing**: stock table, Agent 1 run, draft demands, allocations, receipts |
-| `/contractor` | contractor, project_owner | **Projects & requests**: phases, Agent 6 run, free-text request (Agent 1), demands, approvals |
-| `/negotiations` | platform (+ supplier view of own) | **Quotes & negotiation workspace**: RFQs, quote comparison, Agent 4, counteroffer approvals |
-| `/groups` | platform (+ buyer view of own memberships) | **Group purchasing workspace**: poolable demands, Agent 3, group detail, award, allocations |
-| `/deliveries` | all (scoped) | **Delivery & order tracking**: POs, Agent 5 plan, shipments timeline, receipt confirmation |
+| `/factories` | manufacturer (+ platform directory) | **Factory dashboard**: offers, incoming RFQs, quotes, counteroffers, POs, dispatch |
+| `/distributors` | distributor (+ platform directory) | **Distributor dashboard**: same supplier workspace as `/factories`, scoped to distributor orgs |
+| `/retailers` | retailer | **Inventory & purchasing**: stock table, Agent 1 run, draft demands, allocations, receipts |
+| `/contractors` | contractor, project_owner | **Projects & requests**: phases, Agent 6 run, free-text request (Agent 1), demands, approvals |
+| `/procurement` | platform (+ scoped views) | **Procurement** section overview, with two workspaces: |
+| `/procurement/groups` | platform (+ buyer view of own memberships) | **Group purchasing workspace**: poolable demands, Agent 3, group detail, award, allocations |
+| `/procurement/negotiations` | platform (+ supplier view of own) | **Quotes & negotiation workspace**: RFQs, quote comparison, Agent 4, counteroffer approvals |
+| `/logistics` | all (scoped) | **Delivery & order tracking**: POs, Agent 5 plan, shipments timeline, receipt confirmation |
 | `/agents` | platform (+ own-org runs for others) | **Agent monitoring**: runs list, run detail (input → tool calls → output), per-agent spec |
 | `/settings/organization` | admin | Org profile and members (minimal) |
 
@@ -353,6 +355,7 @@ All steps write `audit_events`, and every agent step writes `agent_runs` and `ag
 | AD-09 | Polling for run status (Realtime optional) | Fewer moving parts |
 | AD-10 | Typed dictionary i18n, Arabic only in MVP | Arabic-first; English can be added without refactor |
 | AD-11 | RLS = read isolation + deny-all direct writes; writes server-mediated via admin client and atomic RPCs | One write path to guard and audit; no partial multi-row commits; far fewer policies to write in 12 h |
+| AD-12 | Navigation follows the owner's Stage 1 sections: `/factories`, `/distributors`, `/retailers`, `/contractors`, `/procurement/{groups,negotiations}`, `/logistics`, `/agents` (replaces `/supplier`, `/retailer`, `/contractor`, `/groups`, `/negotiations`, `/deliveries`) | Owner instruction (Stage 1); same nine platform areas, clearer for users |
 
 ## 12. Open decisions (need owner input; defaults apply if no answer)
 

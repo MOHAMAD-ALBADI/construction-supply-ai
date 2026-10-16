@@ -32,7 +32,7 @@
 └─ src/
    ├─ app/
    │  ├─ (auth)/login/
-   │  ├─ (app)/{dashboard,supplier,retailer,contractor,negotiations,groups,deliveries,agents,settings}/
+   │  ├─ (app)/{dashboard,factories,distributors,retailers,contractors,procurement/{groups,negotiations},logistics,agents,settings}/
    │  ├─ api/v1/**/route.ts      # thin: guard → parse → call → map
    │  └─ layout.tsx              # lang="ar" dir="rtl"
    ├─ components/{ui,layout,<area>}/
@@ -108,7 +108,7 @@ Every module under `src/server/**` begins with `import "server-only"`.
 
 1. **No literal UI strings in components.** Use `t("area.key")` from `src/i18n/ar.ts`, with keys namespaced by area. A matching key in `en.ts` is optional in the MVP.
 2. **Use the glossary** (Doc 1 §9) for all domain terms.
-3. **Logical direction only:** `ms-/me-/ps-/pe-/start-/end-/text-start/text-end`, `border-s/e`, `rounded-s/e`. Forbidden: `ml-/mr-/pl-/pr-/left-/right-/text-left/text-right` (checked by a grep in `verify`). Directional icons get an RTL flip class.
+3. **Logical direction only:** `ms-/me-/ps-/pe-/start-/end-/text-start/text-end`, `border-s/e`, `rounded-s/e`. Forbidden: `ml-/mr-/pl-/pr-/left-/right-/text-left/text-right` (checked by `npm run check:rtl` in `verify`). Directional icons get an RTL flip class. Exemption: vendored shadcn primitives in `src/components/ui`, whose physical classes are keyed to an explicit `side` prop.
 4. **Brand**: names, logo and colours come only from `src/config/brand.ts` (env-overridable). The codename "Construction Supply AI" must not appear in `src/`.
 5. **Formatting** goes through `lib/format.ts` only: `formatOMR(baisa)` (3 decimals), `formatQty`, `formatDate` (`ar-OM`, Latin digits, Gregorian, `Asia/Muscat`).
 6. **Simulation & synthetic labels**: use `<SimulatedBadge/>` on every simulated action, button and record, and the global `<SyntheticDataBanner/>` when `NEXT_PUBLIC_DEMO_MODE=true`. Commercial screens state "الأسعار لا تشمل ضريبة القيمة المضافة (غير محتسبة)".

@@ -199,7 +199,7 @@ Never suggest suppliers that the tools did not return.
 - Group them by specification, quantity, timing window and delivery-zone proximity.
 - Explain each grouping qualitatively (no numeric savings claims).
 
-**Triggers**: coordinator "Find group opportunities" on `/groups`.
+**Triggers**: coordinator "Find group opportunities" on `/procurement/groups`.
 
 **Allowed tools**: `list_poolable_demands`, `check_spec_compatibility`, `evaluate_group_compatibility`
 
@@ -349,7 +349,7 @@ If the quote includes delivery, plan shipments but report delivery cost as retur
 - Work back from lead times to recommend *order-by* dates and actions; flag schedule risk.
 - Suggest pooling where timing allows.
 
-**Triggers**: contractor/project-owner "Analyse project schedule" on `/contractor`.
+**Triggers**: contractor/project-owner "Analyse project schedule" on `/contractors`.
 
 **Allowed tools**: `get_project_schedule`, `get_phase_requirements`, `get_open_demands`, `get_product_lead_times`, `calculate_order_by_date`
 

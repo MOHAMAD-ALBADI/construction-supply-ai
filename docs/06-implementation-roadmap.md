@@ -91,7 +91,7 @@ S1 Scaffold ─► S2 Domain ─► S3 DB/RLS/Seed ─► S4 Auth/Shell ─► S
 
 ### Stage 7 — Group purchasing, Agent 3, Agent 2, RFQs, supplier quoting · 6:15 → 7:30
 **Depends on:** S6
-**Tasks:** `/groups` (poolable demands, Agent 3 run, proposed groups, H2); Agent 2 on the group (shortlist with exclusions, supplier selection, H3); `/supplier` RFQ inbox (aggregated, buyer-anonymous) + quote form (H4); group timeline component; RPCs `rpc_create_proposed_groups`, `rpc_approve_group`, `rpc_dispatch_rfqs`, `rpc_submit_quote`.
+**Tasks:** `/procurement/groups` (poolable demands, Agent 3 run, proposed groups, H2); Agent 2 on the group (shortlist with exclusions, supplier selection, H3); `/factories` + `/distributors` RFQ inbox (aggregated, buyer-anonymous) + quote form (H4); group timeline component; RPCs `rpc_create_proposed_groups`, `rpc_approve_group`, `rpc_dispatch_rfqs`, `rpc_submit_quote`.
 **Acceptance**
 - [ ] Agent 3 proposes one group: 500 bags, 3 distinct buyers. The non-consented decoy is absent; the OPC 52.5R decoy appears in `ungrouped_demands`.
 - [ ] RFQs exist only for coordinator-selected suppliers.
@@ -100,7 +100,7 @@ S1 Scaffold ─► S2 Domain ─► S3 DB/RLS/Seed ─► S4 Auth/Shell ─► S
 
 ### Stage 8 — Negotiation workspace, Agent 4 · 7:30 → 8:30
 **Depends on:** S7
-**Tasks:** `/negotiations` comparison table (domain-computed); `rpc_group_mandate_ceiling`; Agent 4 (5 tools, bounds + leak-filter guardrails) → draft counteroffers; H5 approve/discard; supplier counteroffer inbox + H6 accept/reject/counter; RPCs `rpc_create_counteroffers`, `rpc_send_counteroffer`, `rpc_respond_counteroffer`.
+**Tasks:** `/procurement/negotiations` comparison table (domain-computed); `rpc_group_mandate_ceiling`; Agent 4 (5 tools, bounds + leak-filter guardrails) → draft counteroffers; H5 approve/discard; supplier counteroffer inbox + H6 accept/reject/counter; RPCs `rpc_create_counteroffers`, `rpc_send_counteroffer`, `rpc_respond_counteroffer`.
 **Acceptance**
 - [ ] Every persisted counteroffer satisfies `quoted × (1 − max_ask) ≤ proposed ≤ min(quoted, ceiling)`.
 - [ ] A counteroffer becomes `accepted` only through the supplier route, with `responded_by` = a supplier-org user (DB assertion).
@@ -117,7 +117,7 @@ S1 Scaffold ─► S2 Domain ─► S3 DB/RLS/Seed ─► S4 Auth/Shell ─► S
 
 ### Stage 10 — Delivery tracking & receipt → inventory · 9:30 → 10:15
 **Depends on:** S9
-**Tasks:** `/deliveries` per persona (POs, shipments, stop timeline); simulated dispatch/deliver (labelled, audited `is_simulated`); H10 receipt form; `rpc_simulate_shipment`, `rpc_post_goods_receipt`; group completion.
+**Tasks:** `/logistics` per persona (POs, shipments, stop timeline); simulated dispatch/deliver (labelled, audited `is_simulated`); H10 receipt form; `rpc_simulate_shipment`, `rpc_post_goods_receipt`; group completion.
 **Acceptance**
 - [ ] AT-7: retailer_a's on_hand stays 50 through PO, dispatch and delivery, and becomes 150 only after H10. Exactly one `receipt` movement row exists.
 - [ ] The group reaches `completed` after all receipts; POs reach `fulfilled`.

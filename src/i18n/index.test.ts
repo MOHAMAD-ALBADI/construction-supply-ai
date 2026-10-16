@@ -9,12 +9,12 @@ describe("t", () => {
   });
 
   it("interpolates named params and leaves unknown placeholders intact", () => {
-    expect(t("home.heading", { brand: "اسم تجريبي" })).toBe("اسم تجريبي");
-    expect(t("home.heading")).toBe("{brand}");
+    expect(t("common.plannedStage", { stage: 5 })).toBe("المرحلة 5");
+    expect(t("common.plannedStage")).toBe("المرحلة {stage}");
   });
 
   it("throws on a key that is not a string leaf", () => {
-    expect(() => t("home.agents" as DictionaryKey)).toThrow("Missing i18n key");
+    expect(() => t("pages.dashboard.kpis" as DictionaryKey)).toThrow("Missing i18n key");
   });
 });
 
