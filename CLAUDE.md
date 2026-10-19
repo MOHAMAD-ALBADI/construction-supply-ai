@@ -4,7 +4,7 @@ Arabic-first, multi-tenant, AI-assisted construction-materials procurement platf
 
 ## Status
 - Phase 0 (foundation docs): complete.
-- **Stage 1 (environment, RTL shell, navigation): complete locally** — `npm run verify` green (8 tests), dev server smoke-tested. Pending: first push to GitHub (owner must refresh the GitHub login on this machine) → link Vercel project → preview deploy. **No deployment URL yet.**
+- **Stage 1 (environment, RTL shell, navigation): complete** — `npm run verify` green (8 tests), pushed (tag `stage-1`), deployed and tested at **https://construction-supply-ai.vercel.app**.
 - **Stage 2 not started — waits for explicit owner approval.** Detailed log: [docs/IMPLEMENTATION_STATUS.md](docs/IMPLEMENTATION_STATUS.md) (update it at every checkpoint).
 
 ## Source of truth — read the relevant doc before coding
@@ -59,7 +59,7 @@ Add-on dependency justifications go in this table.
 |---|---|---|
 | Supabase | project ref `xxjzlshtkostlsnnwige` (dedicated hackathon org) | MCP in `.mcp.json`, project-scoped, features `database,docs,debugging,development`. **Before any DB action, confirm `get_project_url` returns this ref** — the owner has other, unrelated live projects. |
 | GitHub | `MOHAMAD-ALBADI/construction-supply-ai` (remote `origin`, branch `main`) | Push via git; GitHub MCP not configured |
-| Vercel | Owner account, **Hobby plan** | MCP connected; confirm function `maxDuration` limit in Stage 1 |
+| Vercel | Owner account, **Hobby plan**; team `team_QmerJsiqwQy3yl9ed1BaDOvE`, project `construction-supply-ai` (`prj_G2b0zW0ncJ9nBox9UCH4MV4wwEmm`) | Git-linked: every push to `main` deploys **production** at https://construction-supply-ai.vercel.app; branches get previews. Functions region `iad1`. Confirm `maxDuration` limit before Stage 5 |
 | OpenAI | key goes in `.env.local` / Vercel env only | Never paste keys in chat or commit them |
 | Local | Node 22, npm 10, Git 2.55; Supabase CLI and `gh` **not installed** | Apply migrations through the Supabase MCP unless the CLI is installed later |
 

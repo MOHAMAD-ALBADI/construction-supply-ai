@@ -1,12 +1,12 @@
 # Implementation Status
 
 > Updated at every stage checkpoint (Doc 6 §3). Newest stage first.
-> **Last updated:** 2026-10-16 · **Current state:** Stage 1 complete locally · waiting for owner approval (Stage 2 not started)
+> **Last updated:** 2026-10-19 · **Current state:** Stage 1 complete and deployed · waiting for owner approval (Stage 2 not started)
 
 | Stage | Status | Notes |
 |---|---|---|
 | Phase 0 — Foundation docs | ✅ Done | Docs 01–07, `CLAUDE.md` |
-| 1 — Scaffold & foundations | ✅ Done locally · ⏳ push/deploy blocked on GitHub login | See below |
+| 1 — Scaffold & foundations | ✅ Done · pushed · deployed | https://construction-supply-ai.vercel.app |
 | 2 — Domain core | Not started | Needs owner approval |
 | 3–12 | Not started | |
 
@@ -55,8 +55,9 @@ shadcn/ui components added: `badge`, `button`, `card`, `separator`, `sheet`, `to
 | Visual check | Headless Edge screenshots (1440 px, 520 px) | ✅ sidebar on the right (start side), cards and wrapping correct; ☰ drawer button on narrow widths |
 | Brand override | build with `NEXT_PUBLIC_BRAND_NAME_AR` set | ✅ title and heading change with no code change |
 | Secret scan | grep for key patterns in tracked files | ✅ none found |
-| GitHub push | `git push -u origin main --tags` | ❌ 403 — stored Windows GitHub credential lacks access (owner action needed) |
-| Vercel preview | — | ⏳ not attempted: requires the repository to be pushed first. **No deployment URL exists yet.** |
+| GitHub push | `git push -u origin main --tags` | ✅ 2026-10-19 after removing a stale `x-access-token` credential from Windows Credential Manager; remote `main` = `f0e2007`, tag `stage-1` |
+| Vercel deployment | Vercel MCP `create_git_project` (repo linked, auto-deploy on push) | ✅ `dpl_E17GdKQLsskK24Hk1sps5DBjFGqb` READY in ~38 s, commit `f0e2007`, region `iad1`. Project `prj_G2b0zW0ncJ9nBox9UCH4MV4wwEmm`, production branch `main` |
+| Live URL test | HTTP checks + headless Edge screenshot of **https://construction-supply-ai.vercel.app** | ✅ `/` → 307 `/dashboard`; 8 section routes 200 with Arabic titles; `<html lang="ar" dir="rtl">`; banner and nav present; unknown path 404; screenshot identical to local, Arabic font loaded |
 
 ### Delivered
 - **Shell:** Arabic-first RTL layout, persistent sidebar (lg+) on the start side, sticky top bar, mobile drawer navigation, synthetic-data banner, configurable brand.
@@ -90,6 +91,9 @@ shadcn/ui components added: `badge`, `button`, `card`, `separator`, `sheet`, `to
 **Changed:** `CLAUDE.md`, `docs/02-system-architecture.md`, `docs/03-six-agent-specification.md`, `docs/06-implementation-roadmap.md`, `docs/07-engineering-rules.md`.
 
 ### Owner actions required
-1. Refresh the GitHub login on this machine (Windows Credential Manager → remove `git:https://github.com`), then run `git push -u origin main --tags` and sign in when the browser opens.
-2. Add server secrets to `.env.local` (never in chat): `SUPABASE_SECRET_KEY` (Supabase → Project Settings → API Keys), `OPENAI_API_KEY`, `OPENAI_MODEL` — needed from Stages 3–5, not for Stage 1.
-3. Approve Stage 2.
+1. Add server secrets to `.env.local` (never in chat): `SUPABASE_SECRET_KEY` (Supabase → Project Settings → API Keys), `OPENAI_API_KEY`, `OPENAI_MODEL` — needed from Stages 3–5, not for Stage 1. The same values must later be added to Vercel → Project → Settings → Environment Variables.
+2. Approve Stage 2.
+
+### Notes for later stages
+- Vercel deploys every push to `main` as **production** (that is the linked production branch); per-stage branches get preview URLs.
+- Vercel functions run in `iad1`; pick the closest region to the Supabase project before Stage 5 (OD-2).
